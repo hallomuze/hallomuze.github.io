@@ -1,4 +1,10 @@
-
+---
+layout: post  
+title:  Issue solved : Safari not opening in Yosemite  
+date:   2015-7-11 11:29:00  
+categories: tip  
+tags: tip_mac
+---
 ## Issue solved : Safari not opening in Yosemite.
 ### Fix 1: 
 
