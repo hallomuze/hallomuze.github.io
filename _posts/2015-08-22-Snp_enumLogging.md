@@ -27,4 +27,4 @@ let option:eeSpaceOrLine =  eeSpaceOrLine(rawValue:0)!
 println("option Value is [\(option)]")
 {% endhighlight %}
 
-result should be : ` option Value is [space only] `
+The result will be : `option Value is [space only]`
