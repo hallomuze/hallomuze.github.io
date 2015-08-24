@@ -1,10 +1,10 @@
 ---
 layout: post  
-title:  My favorites swift libraries that I can't live without  
+title:  swift extensions.   
 date:   2015-8-22 11:29:00  
 categories: lib  
 ---
-### swift essential extensions.
-* [Color Extension Swift Library](https://github.com/bennyguitar/Colours) will save your time with this UIColor extensions
+### My favorite swift libraries that I can't live without
+* [Color Extension Swift Library](https://github.com/bennyguitar/Colours) will save your time.
 * [SwiftyUserDefaults](https://github.com/radex/SwiftyUserDefaults) will make NSUserDefaults so simple to use.
  
