@@ -1,10 +1,30 @@
 ---
 layout: post  
-title:  swift extensions.   
-date:   2015-8-22 11:29:00  
-categories: lib  
+title:  printable enum snippet   
+date:   2015-8-22 21:31:00  
+categories: snippet  
 ---
-### My favorite swift libraries that I can't live without
-* [Color Extension Swift Library](https://github.com/bennyguitar/Colours) will save your time.
-* [SwiftyUserDefaults](https://github.com/radex/SwiftyUserDefaults) will make NSUserDefaults so simple to use.
+This sample code will make println powerful to print out enum value to debugging window.
  
+{% highlight swift %}
+enum eeSpaceOrLine:Int , Printable {  case sSpace = 0 , sLine, sBoth
+    var description:String{ // for println
+        get{
+            switch self{
+            case .sSpace: return "space only"
+            case .sLine : return "line only"
+            case .sBoth: return "space and line"
+            }
+        }
+    }
+}
+{% endhighlight %}
+
+usage
+
+{% highlight swift %}
+let option:eeSpaceOrLine =  eeSpaceOrLine(rawValue:0)!
+println("option Value is [\(option)]")
+{% endhighlight %}
+
+result should be : ` option Value is [space only] `
