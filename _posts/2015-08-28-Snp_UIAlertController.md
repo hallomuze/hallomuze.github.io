@@ -1,7 +1,7 @@
 ---
-layout: post  
-title:  [snippet]UIAlertController 101
-date:   2015-8-28 08:31:00  
+layout: post
+title:  snippet UIAlertController 101
+date:   2015-08-28 08:31:00
 categories: snippet
 ---
 This code makes "Delete All confirmation" Alert Popup.
