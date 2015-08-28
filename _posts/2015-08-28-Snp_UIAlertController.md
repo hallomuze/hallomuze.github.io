@@ -4,7 +4,6 @@ title:  [snippet]UIAlertController 101
 date:   2015-8-28 08:31:00  
 tag: snippet
 categories: iOS
-
 ---
 This code makes "Delete All confirmation" Alert Popup.
  
