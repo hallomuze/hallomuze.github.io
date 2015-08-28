@@ -6,10 +6,14 @@ categories: snippet
 ---
 This code makes "Delete All confirmation" Alert Popup.
  
-{% highlight swift %}
-let alertController = UIAlertController(title: "Please Confirm", message: "Delete all messages?", preferredStyle: UIAlertControllerStyle.Alert)
+Jekyll also offers powerful support for code snippets:
 
-let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
+{% highlight ruby %}
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
 usage: just use it. 
