@@ -12,14 +12,14 @@ let alertController = UIAlertController(title: "Please Confirm", message: "Delet
 
 let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction!) in
 
-    let realm = RLMRealm.defaultRealm()
-    realm.beginWriteTransaction()
-    realm.deleteAllObjects()
-    realm.commitWriteTransaction()
+  let realm = RLMRealm.defaultRealm()
+  realm.beginWriteTransaction()
+  realm.deleteAllObjects()
+  realm.commitWriteTransaction()
     
-    self.loadingCellContents()
-    self.filterCells()
-    self.tableView.reloadData()
+  self.loadingCellContents()
+  self.filterCells()
+  self.tableView.reloadData()
 })
 alertController.addAction(deleteAction)
 
