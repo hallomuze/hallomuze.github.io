@@ -2,8 +2,7 @@
 layout: post  
 title:  [snippet]UIAlertController 101
 date:   2015-8-28 08:31:00  
-tag: snippet
-categories: iOS
+categories: snippet
 ---
 This code makes "Delete All confirmation" Alert Popup.
  
@@ -37,8 +36,5 @@ presentViewController(alertController, animated: true, completion: nil)
 usage
 
 {% highlight swift %}
-let option:eeSpaceOrLine =  eeSpaceOrLine(rawValue:0)!
-println("option Value is [\(option)]")
+just use it.
 {% endhighlight %}
-
-The result will be : `option Value is [space only]`
