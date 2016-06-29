@@ -3,9 +3,10 @@ published: true
 title: ScrollView 101 ( Xcode 7 , Swift 2 )
 layout: post
 ---
-
 ScrollView + Autolayout + Storyboard!
 Zoom functional
+
+* Prerequisite : Set constraints properly for both imageView and scrollView .
 
 ```swift
 
