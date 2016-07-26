@@ -522,12 +522,12 @@ func exampleTwo() {
 ```
 Notice the difference with exampleOne. Here you don’t care about the output of the particular error, but still capture the fact that one occurred. The Toad was not created, so the value of newToad is nil.
 
-##에러 표시하기
-###throws
+## 에러 표시하기
+### throws
 
 함수나 메소드가 에러를 던지는 경우 throws 키워드를 사용합니다. 던져진 에러는 
 The throws keyword is required in Swift if a function or method throws an error. Thrown errors are automatically propagated up the call stack, but letting errors bubble too far from their source is considered bad practice. Significant propagation of errors throughout a codebase increases the likelihood errors will escape appropriate handling, so throws is a mandate to ensure propagation is documented in code – and remains evident to the coder.
-###rethrows
+### rethrows
 여태까지 사용했던 모든 예제에서 throws 를 사용했는데 rethrows 는 뭘까요? 
 
 
@@ -542,7 +542,7 @@ func doSomethingMagical(magicalOperation: () throws -> MagicalResult) rethrows -
 Here doSomethingMagical(_:) will only throw an error if the magicalOperation provided to the function throws one. If it succeeds, it returns a MagicalResult instead.
 
 ## Manipulating Error Handling Behavior
-###defer
+### defer
 Although auto-propagation will serve you well in most cases, there are situations where you might want to manipulate the behavior of your application as an error travels up the call stack.
 The defer statement is a mechanism that permits a ‘cleanup’ action to be performed whenever the current scope is exited, such as when a method or function returns. It’s useful for managing resources that need to be tidied up whether or not the action was successful, and so becomes especially useful in an error handling context.
 To see this in action, add the following method to the Witch structure:
