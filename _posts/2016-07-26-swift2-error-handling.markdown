@@ -2,6 +2,7 @@
 published: true
 title: Swift2 Error Handling
 layout: post
+tags: [swift, error, throws, swift2]
 ---
 ## 시작하기
 
@@ -21,7 +22,7 @@ protocol MagicalTutorialObject {
 
 위 프로토콜은 강좌 전체에 사용되는 Class, Structure 에 적용되는데, 각 오브젝트들을 콘솔화면에 표시해 주기 위해서 사용됩니다.
 
-```
+```swift
 enum MagicWords: String {
   case Abracadbra = "abracadabra"
   case Alakazam = "alakazam"
@@ -33,7 +34,7 @@ enum MagicWords: String {
 이 enumeration 은 주문 (Spell) 을 만들기 위한 마법의 단어들을 설명하고 있습니다.
 
 
-```
+```swift
 struct Spell: MagicalTutorialObject {
   var magicWords: MagicWords = .Abracadbra
   var avatar = "*"
@@ -64,7 +65,7 @@ Swift2 이전에는 이러한 기능을 사용하기 위해 Factory 패턴들 �
 
 createWithMagicWords 함수에서 이러한 예를 볼 수 있습니다.
 
-```
+```swift
 static func createWithMagicWords(words: String) -> Spell? {
   if let incantation = MagicWords(rawValue: words) {
     var spell = Spell()
@@ -92,7 +93,7 @@ static func createWithMagicWords(words: String) -> Spell? {
 
 createWithMagicWords 함수를 삭제하고 아래처럼 수정해주세요.
 
-```
+```swift
 init?(words: String) {
   if let incantation = MagicWords(rawValue: words) {
     self.magicWords = incantation
@@ -107,7 +108,7 @@ init?(words: String) {
 자 이제 명시적인 생성및 spell object 를 리턴하지 않기 위해 코드가 간단해 졌습니다.
 
 앗. first 와 second 부분에 컴파일 에러가 발생하네요.
-```
+```swift
 let first = Spell.createWithMagicWords("abracadabra")
 let second = Spell.createWithMagicWords("ascendio")
 ```
@@ -123,7 +124,7 @@ Guard 구문은 Swift 2 에서 소개되었습니다. 이른바 함수나 메소
 
 Guard 구문을 사용하여 아래처럼 수정해 봅시다.
 
-```
+```swift
 init?(words: String) {
   guard let incantation = MagicWords(rawValue: words) else {
     return nil
@@ -142,7 +143,7 @@ first, second Spell 변수가 바뀌지않은 것을 잘 보십시요. 코드는
 
 아래 코드를 봐 주세요.
 
-```
+```swift
 struct Spell: MagicalTutorialObject {
  
   var magicWords: MagicWords = .Abracadbra
@@ -163,7 +164,7 @@ struct Spell: MagicalTutorialObject {
 
 이 부분은 Spell 초기자입니다. 섹션 1 에서 배웠던 부분을 반영했습니다. MagicalTutorialObject 프로토콜과 두번째 초기자를 잘 봐주세요. 두번째 초기자는 편의상 추가되었습니다.
 
-```
+```swift
 protocol Familiar: MagicalTutorialObject {
   var noise: String { get }
   var name: String? { get set }
@@ -176,7 +177,7 @@ protocol Familiar: MagicalTutorialObject {
 
 노트: unfamiliar 와 familiar 에 대한 어원에 대해 궁금하신 분은 원문을 참조하세요~
 
-```
+```swift
 struct Witch: MagicalBeing {
   var avatar = "*"
   var name: String?
@@ -248,7 +249,7 @@ do-catch 매커니즘은 종종 아래 키워드 주변에서 잘 볼 수 있습
 
 Witch 정의 윗부분에 아래 code 를 추가해주세요.
 
-```
+```swift
 enum ChangoSpellError: ErrorType {
   case HatMissingOrNotMagical
   case NoFamiliar
@@ -264,13 +265,13 @@ SpellFailed 경우를 보면  custom reason 을 지정해 줄 수 있습니다. 
 자 우리 이쁜이들 이제 마법을 한번 써 볼까요 😉
 메소드 시그니쳐에  throws 를 추가합시다. 메소드 호출시 실패가 일어날 수도 있다는 것을 알려주는 구문입니다.
 
-```
+```swift
 func turnFamiliarIntoToad() throws -> Toad {
 ```
 
 MagicalBeing  Protocol역시 아래처럼 수정해주세요.
 
-```
+```swift
 protocol MagicalBeing: MagicalTutorialObject {
   var name: String? { get set }
   var spells: [Spell] { get set }
@@ -283,12 +284,12 @@ protocol MagicalBeing: MagicalTutorialObject {
 
 마녀가 모자를 쓰고 있다는 것을 확실하게 하기 위해서 아래 구문을 수정해주세요.
 
-```
+```swift
 if let hat = hat {
 ```
 를 아래처럼 수정해주세요.
 
-```
+```swift
 guard let hat = hat else {
   throw ChangoSpellError.HatMissingOrNotMagical
 }
@@ -300,13 +301,13 @@ Note: 플레이그라운드가 컴파일러 에러를 뱉을 수 있으니  메�
 
 다음줄은 boolean 체크를 포함하고 있습니다. 이 또한 hat 과 연관되어 있죠.
 
-```
+```swift
 if hat.isMagical {
 ```
 
 잠시 하략. 코딩하면서 체크해보자.
 
-```
+```swift
 guard let hat = hat where hat.isMagical else {
   throw ChangoSpellError.HatMissingOrNotMagical
 }
@@ -316,12 +317,12 @@ guard let hat = hat where hat.isMagical else {
  
 다음, 마녀가 familiar 를 가지고 있는지 체크하는 구문을 변경합시다
 
-```
+```swift
 if let familiar = familiar {
 ```
 …를 아래처럼 Guard 구문에서 .NoFamiliar error 를 발생시키게끔 변경:
 
-```
+```swift
 guard let familiar = familiar else {
   throw ChangoSpellError.NoFamiliar
 }
@@ -332,7 +333,7 @@ guard let familiar = familiar else {
  
 다음 줄을 보죠, 마녀가 두꺼비에게 turnFamiliarIntoToad() 주문을 걸려고 시도 할때 기존의 두꺼비를 리턴하고 있습니다. 여기서는 명시적인 에러가 마녀의 실수를 좀 더 잘 나타내 줍니다. 아래와 같이 수정합니다.
 
-```
+```swift
 if let toad = familiar as? Toad {
   return toad
 }
@@ -340,7 +341,7 @@ if let toad = familiar as? Toad {
 
 …를 아래처럼 수정해주세요.
 
-```
+```swift
 if familiar is Toad {
   throw ChangoSpellError.FamiliarAlreadyAToad
 }
@@ -352,7 +353,7 @@ as? 에서 is 로 변경된 부분을 자세히 봅시다. 이렇게 하면 결�
 
 마지막입니다, hasSpellOfType(type:) 을 호출합시다.  이 메소드를 호출하는 것은 마녀의 마법책 속에 사용하기에 적합한 스펠(주문)이 있다는 것을 보장해 줍니다.
 
-```
+```swift
 if hasSpellOfType(.PrestoChango) {
   if let toad = f as? Toad {
     return toad
@@ -361,7 +362,7 @@ if hasSpellOfType(.PrestoChango) {
 ```
 를 아래와 같이 수정.
 
-```
+```swift
 guard hasSpellOfType(.PrestoChango) else {
   throw ChangoSpellError.SpellNotKnownToWitch
 }
@@ -377,12 +378,12 @@ return Toad(name: name)
 
 다음 일종의 fail-safe 였던 아래 코드를 삭제해주세요.
 
-```
+```swift
 return Toad(name: "New Toad")
 ```
 훨씬 깔끔해진 전체 코드는 아래에서 확인해주세요.
 
-```
+```swift
 func turnFamiliarIntoToad() throws -> Toad {
  
   // When have you ever seen a Witch perform a spell without her magical hat on ? :]
@@ -421,7 +422,7 @@ func turnFamiliarIntoToad() throws -> Toad {
 
 Playground 에 아래 코드를 추가해주세요.
 
-```
+```swift
 func exampleOne() {
   print("") // Add an empty line in the debug area
  
@@ -457,7 +458,7 @@ func exampleOne() {
 
 handleSpellError 함수가 아직 정의되지 않았네요, exampleOne() 함수가 정의된 곳 위쪽에 handleSpellError() 에 대한 정의를 추가해주세요. 
 
-```
+```swift
 func handleSpellError(error: ChangoSpellError) {
   let prefix = "Spell Failed."
   switch error {
@@ -473,7 +474,7 @@ func handleSpellError(error: ChangoSpellError) {
 }
 ```
 아래코드를 플레이그라운드에 추가하고 마지막으로 실행해봅시다.
-```
+```swift
 exampleOne()
 ```
 Xcode 좌측코너의 화살표 아이콘을 눌러서 디버그콘솔 윈도우를 열어주세요. 플레이그라운드의 결과 값은 여기서 확인 가능합니다. 
@@ -481,14 +482,16 @@ Xcode 좌측코너의 화살표 아이콘을 눌러서 디버그콘솔 윈도우
 ![image](https://cdn1.raywenderlich.com/wp-content/uploads/2016/04/Expand-Debug-Area-1.gif)
 
 
-##에러 잡기 (Catching Errors)
+## 에러 잡기 (Catching Errors)
 
 위 코드 스니펫에서 사용된 언어의 특징을 간략히 아래에 설명했습니다. 아래를 보세요.
+
 ### catch
 
 swift 에서는 패턴매칭을 사용할 수 있습니다. 이는 특정에러를 처리하기 위해서 또는 여러에러타입을 한꺼번에 처리할때 사용할 수 있습니다.
 
 위 코드에서는 catch 의 용도 몇 가지를 보여줍니다: 첫번째로 특정 ChangoSpell 에러를 catch 할때, 두번째는 나머지 error 케이스에 대한 처리입니다. 
+
 ### try
  
 코드상에 어떤 라인이나 섹션에서 에러가 발생할 수 있는지 확실하게 지정해 주기 위해서 try구문을 do-catch와 함께 사용할 수 있습니다.
@@ -501,7 +504,7 @@ swift 에서는 패턴매칭을 사용할 수 있습니다. 이는 특정에러�
 
 이제 try? 구문이 사용되는 예를 봅시다. 아래 코드를 그대로 복사해서 여러분의 플레이그라운드에 추가해주세요. 
 
-```
+```swift
 func exampleTwo() {
   print("") // Add an empty line in the debug area
  
@@ -523,31 +526,38 @@ func exampleTwo() {
 Notice the difference with exampleOne. Here you don’t care about the output of the particular error, but still capture the fact that one occurred. The Toad was not created, so the value of newToad is nil.
 
 ## 에러 표시하기
+
 ### throws
 
-함수나 메소드가 에러를 던지는 경우 throws 키워드를 사용합니다. 던져진 에러는 
-The throws keyword is required in Swift if a function or method throws an error. Thrown errors are automatically propagated up the call stack, but letting errors bubble too far from their source is considered bad practice. Significant propagation of errors throughout a codebase increases the likelihood errors will escape appropriate handling, so throws is a mandate to ensure propagation is documented in code – and remains evident to the coder.
+함수나 메소드가 에러를 던지는 경우 throws 키워드를 사용합니다. 던져진 에러는 콜스택으로 자동으로 전달됩니다. 단 너무 멀리까지 이런 전파가 이뤄진다면 좋은 방법은 아닙니다.  과도한 에러전달은 적절한 에러처리를 방해하는 요소로 작용할 수 있습니다. throws 는 이러한 전파가 코드상에 문서화 됨을 확인시켜주기 위한 위임작업입니다. 
+
 ### rethrows
-여태까지 사용했던 모든 예제에서 throws 를 사용했는데 rethrows 는 뭘까요? 
+여태까지 사용했던 모든 예제에서 throws 를 사용했는데 rethrows 는 뭘까요?  `함수의 인자가 에러를 발생시킬때`만 throw 한다는 것을 컴파일러에게 알려주기 위한 것이 rethrows 입니다.
+아래에서 마법과 같은 예시를 보시죠( 플레이그라운드에 추가할 필요는 없습니다)
 
-
-All examples you’ve seen so far have used throws, but what about its counterpart rethrows ?
-rethrows tells the compiler that this function will only throw an error when its function parameter throws an error. A quick and magical example can be found below (no need to add this to the playground):
-
-```
+```swift
 func doSomethingMagical(magicalOperation: () throws -> MagicalResult) rethrows -> MagicalResult {
   return try magicalOperation()
 }
 ```
-Here doSomethingMagical(_:) will only throw an error if the magicalOperation provided to the function throws one. If it succeeds, it returns a MagicalResult instead.
 
-## Manipulating Error Handling Behavior
+doSomethingMagical(_:) 은 에러를 throw 하는데 그 조건과 결과는 아래와 같습니다. 
+
+케이스1: 함수의 인자인 magicalOperation이 에러를 발생시킨다. =>  doSomethingMagical(_:) 도 에러를 발생시킴.
+케이스2: magicalOperation 가 성공적이라면 MagicalResult 값을 반환한다.
+
+##  에러처리 작동을 조작하기
+
 ### defer
+
 Although auto-propagation will serve you well in most cases, there are situations where you might want to manipulate the behavior of your application as an error travels up the call stack.
 The defer statement is a mechanism that permits a ‘cleanup’ action to be performed whenever the current scope is exited, such as when a method or function returns. It’s useful for managing resources that need to be tidied up whether or not the action was successful, and so becomes especially useful in an error handling context.
-To see this in action, add the following method to the Witch structure:
 
-```
+비록 대부분의 경우 자동전파기능은 잘 작동합니다만, 콜스택으로...
+
+실제 어떻게 작동하는지 , Witch 구조체에 아래 메소드를 추가해주세요.
+
+```swift
 func speak() {
   defer {
     print("*cackles*")
@@ -557,7 +567,7 @@ func speak() {
 ```
 Add the following code to the bottom of the playground:
 
-```
+```swift
 func exampleThree() {
   print("") // Add an empty line in the debug area
  
@@ -571,7 +581,10 @@ In the debug console, you should see the witch cackle after everything she says.
 Interestingly, defer statements are executed in the opposite order in which they are written.
 Add a second defer statement to speak() so that a Witch screeches, then cackles after everything she says:
 
-```
+디버깅 콘솔상에서, 마녀가 말할 때마다 cackles 이라고 하는 것을 볼 수 있습니다. 흥미롭게도 defer 는 구현된 것과 반대로 동작합니다. 
+두번째 defer ....
+
+```swift
 func speak() {
   defer {
     print("*cackles*")
