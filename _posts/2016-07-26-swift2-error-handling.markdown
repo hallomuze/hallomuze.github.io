@@ -4,6 +4,9 @@ title: Swift2 Error Handling
 layout: post
 tags: [swift, error, throws, swift2]
 ---
+
+원문: https://www.raywenderlich.com/130197/magical-error-handling-swift
+ 
 ## 시작하기
 
 강좌를 위해 2개의 playground 를 준비했습니다. 우선 다운로드 받으세요.
@@ -634,3 +637,9 @@ Whether you enjoy the idea of a major error handling change in Swift 3, or are h
 If you’re keen to see what may lie ahead in Swift 3, I recommend reading through the currently open proposals; see Swift Language Proposals for further details. If you’re feeling adventurous, why not submit your own? :]
 
 Hopefully by now that you’ve been truly enchanted by error handling in Swift. If you have any questions or comments on this tutorial, please join the forum discussion below!
+
+Ray Weinerlich 사이트가 커지면서 오히려 Localization 에 신경 쓸 여력이 없다고 합니다.
+제가 그동안 작업했던 공식홈페이지에 한글 포스팅 번역물들이 모두 사라져서 이곳에 포스팅합니다.
+
+- Eddie Kwon -
+- ever8greener@gmail.com -
