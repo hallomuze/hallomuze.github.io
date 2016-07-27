@@ -33,7 +33,7 @@ enum MagicWords: String {
 }
 ```
 
-이 enumeration 은 주문 (Spell) 을 만들기 위한 마법과 가ㅗ련된 용어들을 설명하고 있습니다.
+이 enumeration 은 주문 (Spell) 을 만들기 위한 마법과 관련된 용어들을 설명하고 있습니다.
 
 
 ```swift
@@ -60,7 +60,7 @@ struct Spell: MagicalTutorialObject {
 
 이 기법을 사용한  두가지 예시는 failable 초기화와 guard statement 입니다.
 
-##Failable initializers ( 실패가능 초기자)
+## Failable initializers ( 실패가능 초기자)
 
 해석하자면 "실패할 수 있는 초기화" 입니다. 너무 길기 때문에 원문 그대로 사용합니다. Failable initializers 를 이용하면 충분한 정보가 없는 경우 오브젝트 생성 자체를 막을 수 있습니다.
 Swift2 이전에는 이러한 기능을 사용하기 위해 Factory 패턴들 사용했습니다. 이는 기존의 다른 언어들도 마찬가지입니다.
