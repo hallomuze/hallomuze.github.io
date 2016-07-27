@@ -609,23 +609,25 @@ func speak() {
 ```
 Did the statements print in the order you expected? Ah, the magic of defer!
 
-## More Fun with Errors
+## 더 재미있는 에러처리를 위해
 
-The inclusion of the above statements in Swift brings the language into line with many other popular languages and separates Swift from the NSError-based approach found in Objective-C. Objective-C errors are, for the most part, directly translated, and the static analyzer in the compiler is excellent for helping you with which errors you need to catch, and when.
+위와 같은 문법을 도입함으로써 스위프트는 다른 인기많은 언어들과 어깨를 나란히 하게  되었습니다. 또한  기존의 오브젝티브C 베이스의 NSError 접근방식과 분리시켰습니다.  
 
-Although the do-catch and related features have significant overhead in other languages, in Swift they are treated like any other statement. This ensures they remain efficient – and effective.
+타 언어에서의 do-catch 구문은 언어자체의 큰 오버헤드를 주고 있는 반면, 스위프트에서는 이러한 문법들이 기존 문법처럼 쓰이고 있습니다. 이런 부분이 스위프트를 좀 더 효율적이고 효과적인 언어로 만들고 있습니다.
 
-But just because you can create custom errors and throw them around, doesn’t necessarily mean that you should. You really should develop guidelines regarding when to throw and catch errors for each project you undertake. I’d recommend the following:
+다만 에러처리와 throw 구문들을 사용할 수 있다고해서 이러한 특징들을 반드시 이용해야 만 하는 것은 아닙니다. 진행중인 프로젝트에서 throw 와 catch 를 사용할 때 반드시 가이드라인을 따라 개발해야 합니다. 특별히 아래와 같은 몇가지 방법을 추천합니다.
 
-* Ensure error types are clearly named across your codebase.
-* Use optionals where a single error state exists.
-* Use custom errors where more than one error state exists.
-* Don’t allow an error to propagate too far from its source.
-The Future of Error Handling in Swift
+* 명확하고 깔끔한 에러타입을 사용해야 한다
+* 하나의 에러스테이트를 가지는 경우에는 옵셔널을 사용한다
+* 하나 이상의 에러가 존재하는 경우에 custom error 를 사용한다
+* 소스로 부터 너무 멀리까지 에러를 전파해서는 안 된다
 
-A couple of ideas for advanced error handling are floating around various Swift forums. One of the most-discussed concepts is untyped propagation.
+## Swift 에서 에러처리의 미래는?
 
-Whether you enjoy the idea of a major error handling change in Swift 3, or are happy with where things are today, it’s nice to know that clean error handling is being actively discussed and improved as the language develops.
+여러 Swift 포럼사이에 고급 에러처리에 대한 여러가지 아이디어들이 나오고 있습니다. 그중 가장 활발히 논의되고 있는 것 중 하나는 untyped propagation 이라는 개념입니다.
+
+Swift 3 에 소개된 주요 에러처리 방법 또는 기존의 방식중 어떤 것을 선호하던지간에 깔끔한 에러처리에 대한논의가 활발할 때 Swift 는 더욱 발전할 것 입니다.
+  
 
 
 ## 자.이제 다음엔 무엇을 해야 하나?
