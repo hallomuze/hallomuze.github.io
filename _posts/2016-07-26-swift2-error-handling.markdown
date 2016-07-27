@@ -33,7 +33,7 @@ enum MagicWords: String {
 }
 ```
 
-이 enumeration 은 주문 (Spell) 을 만들기 위한 마법의 단어들을 설명하고 있습니다.
+이 enumeration 은 주문 (Spell) 을 만들기 위한 마법과 가ㅗ련된 용어들을 설명하고 있습니다.
 
 
 ```swift
@@ -110,17 +110,25 @@ init?(words: String) {
 자 이제 명시적인 생성및 spell object 를 리턴하지 않기 위해 코드가 간단해 졌습니다.
 
 앗. first 와 second 부분에 컴파일 에러가 발생하네요.
+
 ```swift
 let first = Spell.createWithMagicWords("abracadabra")
 let second = Spell.createWithMagicWords("ascendio")
 ```
+아래와 같이 생성자를 수정해 주세요.
 
-하략.
+```swift
+let first = Spell(words: "abracadabra")
+let second = Spell(words: "ascend")
+
+```
+모든 에러가 수정되었고 잘 실행될 겁니다. 코드가 훨씬 깔끔해졌죠~
+
 
 ## Guard 구문
 
 어떤 값이 참 인지 아닌지 확실히 파악할 수 있는 빠른 방법입니다.
-예를들어 값이 0보다 큰경우 또는 값이 unwrapped 가능한경우를 들수있다.  결과가 fail 일 때 code block 을 실행합니다.
+예를들어 값이 0보다 큰경우 또는 값이 unwrapped 가능한경우를 들수있다.  결과가 fail 일 때 특정 코드블럭을 실행합니다.
 
 Guard 구문은 Swift 2 에서 소개되었습니다. 이른바 함수나 메소드속에서 early exit 를 가능하게 해 줍니다.  이는 나머지 코드에 대한 실행할 지 말지 결정하는데 명확하게 해 줍니다.
 
@@ -135,9 +143,9 @@ init?(words: String) {
 }
 ```
 
-이 구문을 사용함으로써 추가적인 else 코드블럭을 없앨 수 있고, fail case 가 초기화구문의 앞부분에 있음으로써 코드가 깔끔해집니다. 또한 코드상에 indent 가 줄어들어 읽기 쉬워지는 장점또한 있습니다. 이를 golden path라고 합니다.
+이 구문을 사용함으로써 추가적인 else 코드블럭을 없앨 수 있고,  에러처리를 초기화 구문의 앞부분으로 이동 시킴으로써 코드가 깔끔해집니다. 또한 코드상에 indent 가 줄어들어 읽기 쉬워지는 장점 또한 있습니다.  이를 Golden path라고 합니다.
 
-first, second Spell 변수가 바뀌지않은 것을 잘 보십시요. 코드는 좀 더 단순하게 바뀌었습니다.
+정리해보자면 first, second Spell 변수가 그대로이지만 코드는 훨씬 더 단순하게 바뀌었습니다.
 
 ## Custom Handling 을 통한 에러 피해보기
 
