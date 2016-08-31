@@ -559,11 +559,8 @@ doSomethingMagical(_:) 은 에러를 throw 하는데 그 조건과 결과는 아
 ##  에러처리 작동을 조작하기
 
 ### defer
-
-Although auto-propagation will serve you well in most cases, there are situations where you might want to manipulate the behavior of your application as an error travels up the call stack.
-The defer statement is a mechanism that permits a ‘cleanup’ action to be performed whenever the current scope is exited, such as when a method or function returns. It’s useful for managing resources that need to be tidied up whether or not the action was successful, and so becomes especially useful in an error handling context.
-
-비록 대부분의 경우 자동전파기능은 잘 작동합니다만, 콜스택으로...
+ 
+비록 대부분의 경우 자동전파기능은 잘 작동합니다만, 콜스택으로... 시간 관계상..번역 중략함( 어려운 내용은 아님 )
 
 실제 어떻게 작동하는지 , Witch 구조체에 아래 메소드를 추가해주세요.
 
@@ -575,7 +572,7 @@ func speak() {
   print("Hello my pretties.")
 }
 ```
-Add the following code to the bottom of the playground:
+아래 코드를  playground 아래부분에 추가하세요.
 
 ```swift
 func exampleThree() {
@@ -586,13 +583,8 @@ func exampleThree() {
 }
  
 exampleThree()
-```
-In the debug console, you should see the witch cackle after everything she says.
-Interestingly, defer statements are executed in the opposite order in which they are written.
-Add a second defer statement to speak() so that a Witch screeches, then cackles after everything she says:
-
-디버깅 콘솔상에서, 마녀가 말할 때마다 cackles 이라고 하는 것을 볼 수 있습니다. 흥미롭게도 defer 는 구현된 것과 반대로 동작합니다. 
-두번째 defer ....
+``` 
+디버깅 콘솔상에서, 마녀가 말할 때마다 cackles 이라고 하는 것을 볼 수 있습니다. 흥미롭게도 defer 는 구현된 것과 반대로 동작합니다.  (원문참조)
 
 ```swift
 func speak() {
