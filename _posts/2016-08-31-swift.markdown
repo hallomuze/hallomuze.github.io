@@ -1,0 +1,134 @@
+---
+published: true
+title: Swift 생성자 사용 패턴
+layout: post
+---
+## Swift 생성자 사용 패턴
+
+
+Swift 는 아주 잘 고려된 초기화 시스템을 가지고 있다.  지정생성자, 편의생성자와 같은 옵션등을 이용하여 모든 속성( 역주 : 여기서 언급하는 것은 Class Property 등을  말함 ) 들을 사용 전에 미리 초기화 시켜야 한다. 즉 값을 가져지게끔 해야 한다.   왜냐면 컴파일러에러를 피해야 하니깐.  저자의  [ 또 다른 강좌는 여기를 참조](http://basememara.com/swift-class-inheritance/ ) 하기 바란다.
+
+초기화  규칙의 존재 이야에는 나름 합당한 사유가 존재하지만, 때때로 일을 아주 지겹게 만들기도 한다(tedious)
+UIViewController 클래스의 예를 들자면 초기화방법에 따라서 두 가지의 생성자가 존재한다. 이 두가지 방법이란 코딩을 통한방법과 Storyboard 를 이용한 방법 각각을 말한다. 동일한 작업을 위해 아래처럼 중복된 코드를 작성해야 한다.
+
+```swift
+class SomeViewController: UIViewController {
+    private let videoPlayer: AVPlayer
+    private let videoPlayerLayer: AVPlayerLayer
+    
+    override init(nibName: String?, bundle nibBundle: NSBundle?) {
+        videoPlayer = AVPlayer(URL: NSURL(fileReferenceLiteral: "movie.mov"))
+        videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
+        
+        super.init(nibName: nibName, bundle: nibBundle)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        videoPlayer = AVPlayer(URL: NSURL(fileReferenceLiteral: "movie.mov"))
+        videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
+        
+        super.init(coder: decoder)
+    }
+}
+```
+
+`super.init` 을 호출하기 전에 두개의 변수 즉 `videoPlayer` 와 `videoPlayerLayer` 를 모두 선언해야 컴파일 에러가 발생치 않는다. 여기서는 간단한 예시를 들고 있지만, 초기화 작업이 많아지면서 필요한 경우 반복되는 코딩량이 점점 늘어날 것이다. 
+
+그렇다면 간단히 공통함수를 하나 만들어서 두 생성자에서 호출을 해주면 되지 않나? 라고 생각할 수도 있겠지만 이 아이디어는 사실상 불가능하다.  `super.init` 을 호출하기 전에는 `self` 키워드를 사용할 수 없다 . 즉 메소드 호출을 위해서 `self`를 사용해야 하는데 참조자체가 불가능하기 때문이다. 
+
+```swift
+class SomeViewController: UIViewController {
+    private let videoPlayer: AVPlayer
+    private let videoPlayerLayer: AVPlayerLayer
+    
+    override init(nibName: String?, bundle nibBundle: NSBundle?) {
+        // ERROR: Cannot use "self" before initialization,
+        // but can't use method after initialization until
+        // all properties declared - catch 22
+        commonInit()
+        
+        super.init(nibName: nibName, bundle: nibBundle)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        // ERROR: Cannot use "self" before initialization,
+        // but can't use method after initialization until
+        // all properties declared - catch 22
+        commonInit()
+        
+        super.init(coder: decoder)
+    }
+    
+    func commonInit() {
+        videoPlayer = AVPlayer(URL: NSURL(fileReferenceLiteral: "movie.mov"))
+        videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
+    }
+}
+```
+
+이런 딜레마를 극복하기 위해서  이번 기회에 `defer init` 이라는 키워드를  swift community에 제한하려고 했다. 즉 아래처럼 말이다( swift-evolution mailing list 아시죠? ) :
+
+```swift
+class SomeViewController: UIViewController {
+    private let videoPlayer: AVPlayer
+    private let videoPlayerLayer: AVPlayerLayer
+    
+    override init(nibName: String?, bundle nibBundle: NSBundle?) {
+        super.init(nibName: nibName, bundle: nibBundle)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+   
+    defer init() { // New proposed keyword
+        videoPlayer = AVPlayer(URL: NSURL(fileReferenceLiteral: "movie.mov"))
+        videoPlayerLayer = AVPlayerLayer(player: player)
+    }
+}
+```
+
+내가 생각했던 것은 함수사용을 위한 별도의 defer 키워드 컨셉이었다. 그런데 지인의 의견에 따르면 `defer init`  이라 키워드를 사용하게되면, super 의 생성자가 초기화 되기전이 아닌 후에 호출되는 것으로 오해를 살 수 있기 때문에 혼동을 줄 수 있는 아이디어라는 의견을 받았다. 이에 전적으로 동감하여 이 아이디어를 drop 시켰다. 
+
+그때 어떤 대단하신분께서는 또 다른 아주 멋진 해결 방법을 아래처럼 제시해 주었다.
+
+```swift
+class SomeViewController: UIViewController {
+ 
+    private typealias My = SomeViewController
+    
+    private let videoPlayer: AVPlayer
+    private let videoPlayerLayer: AVPlayerLayer
+    
+    override init(nibName: String?, bundle nibBundle: NSBundle?) {
+        (videoPlayer, videoPlayerLayer) = My.commonInit()
+ 
+        super.init(nibName: nibName, bundle: nibBundle)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        (videoPlayer, videoPlayerLayer) = My.commonInit()
+ 
+        super.init(coder: decoder)
+    }
+    
+    private static func commonInit() -> (AVPlayer, AVPlayerLayer) {
+        let player = AVPlayer(URL: NSURL(fileReferenceLiteral: "movie.mov"))
+        let layer = AVPlayerLayer(player: player)
+        
+        return (player,layer)
+    }
+}
+```
+
+와우!  이렇게하면 초기화규격을 따르면서도 반복코드을 줄일 수 있게 된다. `properties` 초기화를 하기 위해 `static fucntion` 을 사용하고 있다. 속성을 초기화하기 위해서 여기서는 static function 을 사용하고 있다. static function은  클래스 초기화 이전에 호출이 가능하다.( self 를 사용하는 것이 아닌, static 을 사용하기 때문에 이것이 가능함.)
+
+추가적으로, 두가지 속성을 한꺼번에 초기화하기 위해서 tuple 을 사용함을 볼 수 있다. 역시 멋지다! 그리고 무엇보다도, static 호출을 짧고 단순하게 만들기 위해서  `typealias` 를 사용하고 있다. - 이를테면  `My` 또는 `I`  등등.
+
+이게 바로 Swift 가 가진 수 많은 아름다운 모습 중 하나이다.  그리고 Community에서 새로운 것들을 배우는 동안, 장래에 여러분께서도 swift-evolution mailing list 에 공헌하기를 힘껏 추천하는 바이다
+
+이상입니다.
+
+원문:  Common Initializer Patterns in Swift - Basem Emara [링크](http://basememara.com/common-initializer-patterns-swift/)
+
+번역: Eddie Kwon.
