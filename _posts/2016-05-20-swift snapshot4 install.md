@@ -1,7 +1,7 @@
 ---
 layout: post  
 title:  swift snapshot4 install.   
-date:   2017-5-15 10:29:00  
+date:   2017-5-20 10:29:00  
 categories: swiftenv, swift  
 ---
 # snapshot4 install - fish 터미널에서 swiftenv 사용
