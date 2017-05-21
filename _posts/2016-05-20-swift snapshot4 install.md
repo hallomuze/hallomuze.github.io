@@ -4,7 +4,7 @@ title:  swift snapshot4 install.
 date:   2017-5-20 10:29:00  
 categories: swiftenv, swift  
 ---
-# snapshot4 install - fish 터미널에서 swiftenv 사용
+#  snapshot4 install 하기 / fish 터미널에서 swiftenv 사용해서 install (x) , install pkg file(O)
 아무것도 모른다.
 fish는 터미널을 조금 예쁘게 보여주는 애플리케이션이다.
 여튼 fish 가 설치되었다고 가정하고 시작한다
